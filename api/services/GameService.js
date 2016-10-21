@@ -1,8 +1,6 @@
 module.exports = {
 
   addMove: function(game, params, cb) {
-    console.log('GAME: ',game);
-    console.log('PARAMS: ',params);
     if (params.userWon) {
       Move.create( { game: game.id, userType: params.currBoard.turn } ).exec(function(err,createdMove){
         if (err) {

@@ -34,6 +34,11 @@ module.exports = {
     isFull: {
       type: 'boolean',
       defaultsTo: false
+    },
+
+    gameDone: {
+      type: 'boolean',
+      defaultsTo: false
     }
 
   }
