@@ -6,6 +6,8 @@
 
 		// global objects
 		turn = 0;
+    firstMove = true;
+    gameId = '';
 		currBoard = new Board(COLS,0,new Array(COLS^2));
 		scoreArr = new Array();
 
@@ -17,21 +19,31 @@
 				for (j = 0; j < size; ++j) {
 					$(".boardRow:last").append( $("<td>").addClass("boardCell").data("column",j)
 					.click(function() {
-						if(turn==0) { playColumn(jQuery.data(this,"column")); }
+						if(turn==0) {
+              if (firstMove) {
+                persistNewGame(function(err,game){
+                  if (err) {
+                    Materialize.toast('Sorry, something went wrong with creating the new game.', 4000);
+                  }
+                  firstMove = false;
+                  gameId = game.id;
+                  playColumn(jQuery.data(this,"column"));
+                });
+              }
+              playColumn(jQuery.data(this,"column"));
+            }
 					}));
 				}
 			}
 		}
 
 		function playColumn(c) {
-      console.log('currBoard: ',currBoard);
 			if (currBoard.getScore(0) != WIN_SCORE && currBoard.getScore(1) != WIN_SCORE && !currBoard.isFull()) {
 				$("#board tr td:nth-child("+(c+1)+"):not(.played):last").addClass("played player"+(turn+1)).data("player",turn);
 				currBoard.playColumn(c);
 
 				turn = Math.abs(turn-1);
 				if (turn == 1) {
-          console.log('LOOK_AHEAD: ',LOOK_AHEAD);
 					window.setTimeout('playColumn(minMax(turn,currBoard,LOOK_AHEAD)[0]);', 10);
 					// if (LOOK_AHEAD < 5) LOOK_AHEAD++; if you want to get smarter as we go on
 					$("#message").html('The computer needs to think...');
@@ -66,7 +78,7 @@
     function uploadMove(payload) {
       var payload = JSON.stringify(payload);
       $.ajax({
-        url: "/update",
+        url: "/game/"+gameId+"/addMove",
         type: 'POST',
         contentType:'application/json',
         data: payload,
@@ -74,6 +86,19 @@
         success: function(data){
         },
         error: function(data){
+        }
+      });
+    }
+
+    function persistNewGame(cb){
+      $.ajax({
+        url: '/game/create',
+        type: 'POST',
+        success: function(resp) {
+          return cb(null,resp);
+        },
+        error: function(err) {
+          return cb(err,null);
         }
       });
     }
@@ -211,6 +236,7 @@
       $('#new-game-button').click(function(e){
         currBoard = new Board(COLS,0,new Array(COLS^2));
         scoreArr = new Array();
+        firstMove = true;
         $("#board tr td").removeClass("played player1 player2 hover hover-target");
         var difficulty = $('input[name=diff]:checked').val();
         if (difficulty == 'easy') {
