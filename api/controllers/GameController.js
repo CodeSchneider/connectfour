@@ -35,12 +35,14 @@ module.exports = {
 
   'getLastTenResults': function(req,res,next) {
     sails.log.info('GameController: retrieving last ten game results');
-    Game.find().sort('updatedAt ASC').where( { gameDone: true} ).limit(10).exec(function(err,foundLastTenGames){
+    Game.find().sort('updatedAt ASC').where( { gameDone: true} ).limit(10).populate('moves').exec(function(err,foundLastTenGames){
       if (err) {
         sails.log.error(err);
         return res.send(500);
       }
-      return res.send(foundLastTenGames);
+      GameService.massageGameDataForTable(foundLastTenGames,function(massagedLastTenGames){
+        return res.send(massagedLastTenGames);
+      });
     });
   }
 

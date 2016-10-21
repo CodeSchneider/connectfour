@@ -97,7 +97,7 @@
     function persistNewGame(cb){
       $.ajax({
         url: '/game/create',
-        type: 'POST',
+        type: 'GET',
         success: function(resp) {
           return cb(null,resp);
         },
@@ -222,9 +222,39 @@
 			return new Board(this.size, this.turn, this.state.slice(0));
 		};
 
+    function getRecentGamesResults() {
+      $.ajax({
+        url: '/game/lastTen',
+        type: 'GET',
+        success: function(resp) {
+          var newRows = buildRows(resp);
+          $('#recentGamesTable tbody').append(newRows);
+        },
+        error: function(err) {
+          return cb(err,null);
+        }
+      });
+    }
+
+    function buildRows(data) {
+      var arr = [];
+      for (i=0;i<data.length;i++) {
+        var row = [
+          "<tr>",
+            "<td>"+data[i].victor+"</td>",
+            "<td>"+data[i].movesNum+"</td>",
+            "<td>"+data[i].time+"</td>",
+          "</tr>"
+        ].join("\n");
+        arr.push(row);
+      }
+      var payload = [arr].join("\n");
+      return payload;
+    }
+
 		$(document).ready(function() {
 			buildBoard(COLS);
-
+      getRecentGamesResults();
 			// jQuery + CCS magic for highlighting target column
 			$("#boardId").delegate('td','mouseover mouseleave', function(e) {
 				if (e.type == 'mouseover' && turn == 0) {
