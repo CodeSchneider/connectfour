@@ -40,31 +40,42 @@
 			}
 			if (currBoard.getScore(0) == WIN_SCORE) {
         $("#message").html('Wow, you won!');
-        upload({
+        uploadMove({
           currBoard: currBoard,
           userWon: true
         });
       } else if (currBoard.getScore(1) == WIN_SCORE) {
         $("#message").html('The computer has won, I\'m not suprised.');
-        upload({
+        uploadMove({
           currBoard: currBoard,
           computerWon: true
         });
       } else if (currBoard.isFull()) {
         $("#message").html('Welp, the board is full, let\'s call it a tie');
-        upload({
+        uploadMove({
           currBoard: currBoard,
           isFull: true
         });
       } else {
-        upload({
+        uploadMove({
           currBoard: currBoard
         });
       }
 		}
 
-    function upload(payload) {
-      //TODO
+    function uploadMove(payload) {
+      var payload = JSON.stringify(payload);
+      $.ajax({
+        url: "/update",
+        type: 'POST',
+        contentType:'application/json',
+        data: payload,
+        dataType:'json',
+        success: function(data){
+        },
+        error: function(data){
+        }
+      });
     }
 
 		function minMax(p, b, d) {
