@@ -15,25 +15,13 @@ module.exports = {
         uuidv4: true
     },
 
-    //game has many moves
-    moves: {
-      collection: 'Move',
-      via: 'game'
+    //move belongs to a game
+    game: {
+      model: 'Game'
     },
 
-    userWon: {
-      type: 'boolean',
-      defaultsTo: false
-    },
-
-    computerWon: {
-      type: 'boolean',
-      defaultsTo: false
-    },
-
-    isFull: {
-      type: 'boolean',
-      defaultsTo: false
+    userType: {
+      type: 'string'
     }
 
   }

@@ -23,7 +23,6 @@ module.exports = {
         sails.log.error('Game not found');
         return res.send(500);
       }
-      return res.send(200, {});
       GameService.addMove(foundGame,req.allParams(),function(err,addedMove){
         if (err) {
           sails.log.error('There was a problem adding the move to the game');

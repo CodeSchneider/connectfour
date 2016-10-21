@@ -19,6 +19,7 @@
 				for (j = 0; j < size; ++j) {
 					$(".boardRow:last").append( $("<td>").addClass("boardCell").data("column",j)
 					.click(function() {
+            var __this = this;
 						if(turn==0) {
               if (firstMove) {
                 persistNewGame(function(err,game){
@@ -27,10 +28,12 @@
                   }
                   firstMove = false;
                   gameId = game.id;
-                  playColumn(jQuery.data(this,"column"));
+                  console.log('returned.')
+                  playColumn(jQuery.data(__this,"column"));
                 });
+              } else {
+                playColumn(jQuery.data(__this,"column"));
               }
-              playColumn(jQuery.data(this,"column"));
             }
 					}));
 				}
@@ -69,6 +72,7 @@
           isFull: true
         });
       } else {
+        console.log('about to upload.');
         uploadMove({
           currBoard: currBoard
         });
