@@ -24,14 +24,16 @@
 		}
 
 		function playColumn(c) {
+      console.log('currBoard: ',currBoard);
 			if (currBoard.getScore(0) != WIN_SCORE && currBoard.getScore(1) != WIN_SCORE && !currBoard.isFull()) {
 				$("#board tr td:nth-child("+(c+1)+"):not(.played):last").addClass("played player"+(turn+1)).data("player",turn);
 				currBoard.playColumn(c);
 
 				turn = Math.abs(turn-1);
 				if (turn == 1) {
+          console.log('LOOK_AHEAD: ',LOOK_AHEAD);
 					window.setTimeout('playColumn(minMax(turn,currBoard,LOOK_AHEAD)[0]);', 10);
-					if (LOOK_AHEAD < 5) LOOK_AHEAD++;
+					// if (LOOK_AHEAD < 5) LOOK_AHEAD++; if you want to get smarter as we go on
 					$("#message").html('The computer needs to think...');
 				}
 				else { $("#message").html('Your turn, fellow human...'); }
@@ -194,4 +196,16 @@
 					$("#board tr td:nth-child("+($(this).index()+1)+"):not(.played):last").removeClass("hover-target");
 				}
 			});
+
+      $('#new-game-button').click(function(e){
+        currBoard = new Board(COLS,0,new Array(COLS^2));
+        scoreArr = new Array();
+        $("#board tr td").removeClass("played player1 player2 hover hover-target");
+        var difficulty = $('input[name=diff]:checked').val();
+        if (difficulty == 'easy') {
+          LOOK_AHEAD = 2;
+        } else {
+          LOOK_AHEAD = 4;
+        }
+      });
 		});

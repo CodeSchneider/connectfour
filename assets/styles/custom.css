@@ -54,7 +54,7 @@ a:hover {
 	Pi Project Style
 */
 
-#controls a {
+/*#controls a {
 	background-color: green;
 	padding: 5px;
 	text-decoration: none;
@@ -67,7 +67,7 @@ a:hover {
 
 #controls a:hover {
 	background-color: lightgreen;
-}
+}*/
 
 #counts {
 	font-size: xx-large;
@@ -181,4 +181,17 @@ a:hover {
   -ms-flex-pack: justify;
   justify-content: space-between;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.radio-button {
+  display: inline;
+  margin-left: 20px;
+}
+
+#controls {
+  padding: 10px 25px;
+}
+
+.rad-wrap {
+  display: inline-block;
 }
