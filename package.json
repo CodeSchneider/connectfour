@@ -1,8 +1,8 @@
 {
   "name": "connectfour",
   "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
+  "version": "0.0.1",
+  "description": "Connectfour Sailsjs app, websockets",
   "keywords": [],
   "dependencies": {
     "ejs": "2.3.4",
@@ -22,15 +22,15 @@
     "lodash": "^4.16.4",
     "moment": "^2.15.1",
     "rc": "1.0.1",
-    "sails": "~0.12.3",
+    "sails": "^0.12.3",
     "sails-disk": "~0.10.9",
-    "sails-mysql": "^0.11.5"
+    "sails-mysql": "^0.12.1"
   },
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node server.js --prod",
+    "debug": "node debug server.js"
   },
-  "main": "app.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/codeschneider/connectfour.git"

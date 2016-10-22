@@ -1,6 +1,7 @@
 module.exports = {
 
   'create': function(req,res,next) {
+    console.log('env: ',process.env.DB_PW);
     sails.log.info('GameController: creating new game');
     Game.create().exec(function(err,createdGame){
       if (err) {
