@@ -1,6 +1,11 @@
 # connectfour
 
-a [Sails](http://sailsjs.org) application
+### Features
+
++ Sailsjs backend, database persistence via waterline and MySQL
++ Connect Four opponent has two difficulty settings (easy/hard)
++ Connect Four opponent uses minmax algorithm (shoutout to Lukas Vermeer for algorithmic inspiration)
++ At the bottom of the app is a table showing the ten most recent games on the app, and it gets updated in real-time via websockets!
 
 ### Install
 
