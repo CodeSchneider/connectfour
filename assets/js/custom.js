@@ -28,7 +28,6 @@
                   }
                   firstMove = false;
                   gameId = game.id;
-                  console.log('returned.')
                   playColumn(jQuery.data(__this,"column"));
                 });
               } else {
@@ -55,24 +54,26 @@
 			}
 			if (currBoard.getScore(0) == WIN_SCORE) {
         $("#message").html('Wow, you won!');
+				Materialize.toast('You\'re game has been added to the table below! In real-time!', 4000);
         uploadMove({
           currBoard: currBoard,
           userWon: true
         });
       } else if (currBoard.getScore(1) == WIN_SCORE) {
         $("#message").html('The computer has won, I\'m not suprised.');
+				Materialize.toast('You\'re game has been added to the table below! In real-time!', 4000);
         uploadMove({
           currBoard: currBoard,
           computerWon: true
         });
       } else if (currBoard.isFull()) {
         $("#message").html('Welp, the board is full, let\'s call it a tie');
+				Materialize.toast('You\'re game has been added to the table below! In real-time!', 4000);
         uploadMove({
           currBoard: currBoard,
           isFull: true
         });
       } else {
-        console.log('about to upload.');
         uploadMove({
           currBoard: currBoard
         });
@@ -281,7 +282,6 @@
       });
 
       io.socket.on('updateTable', function() {
-        console.log('updateTable!!!!');
         getRecentGamesResults();
       });
 
