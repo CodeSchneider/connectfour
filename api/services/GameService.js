@@ -13,8 +13,9 @@ module.exports = {
           if (err) {
             return cb(err,null);
           }
-          // NotificationService.updateTable...
-          return cb(null,updatedGame);
+          BroadcastService.updateTable(function(){
+            return cb(null,updatedGame);
+          });
         });
       })
     } else if (params.computerWon) {
@@ -26,8 +27,9 @@ module.exports = {
           if (err) {
             return cb(err,null);
           }
-          // NotificationService.updateTable...
-          return cb(null,updatedGame);
+          BroadcastService.updateTable(function(){
+            return cb(null,updatedGame);
+          });
         });
       });
     } else if (params.isFull) {
@@ -39,8 +41,9 @@ module.exports = {
           if (err) {
             return cb(err,null);
           }
-          // NotificationService.updateTable...
-          return cb(null,updatedGame);
+          BroadcastService.updateTable(function(){
+            return cb(null,updatedGame);
+          });
         });
       });
     } else {

@@ -228,7 +228,7 @@
         type: 'GET',
         success: function(resp) {
           var newRows = buildRows(resp);
-          $('#recentGamesTable tbody').append(newRows);
+          $('#recentGamesTable tbody').html(newRows);
         },
         error: function(err) {
           return cb(err,null);
@@ -279,4 +279,10 @@
           LOOK_AHEAD = 4;
         }
       });
+
+      io.socket.on('updateTable', function() {
+        console.log('updateTable!!!!');
+        getRecentGamesResults();
+      });
+
 		});
