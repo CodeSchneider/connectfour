@@ -47,7 +47,7 @@
 				turn = Math.abs(turn-1);
 				if (turn == 1) {
 					window.setTimeout('playColumn(minMax(turn,currBoard,LOOK_AHEAD)[0]);', 10);
-					// if (LOOK_AHEAD < 5) LOOK_AHEAD++; if you want to get smarter as we go on
+					//if (LOOK_AHEAD < 5) LOOK_AHEAD++; //if you want to get smarter as we go on
 					$("#message").html('The computer needs to think...');
 				}
 				else { $("#message").html('Your turn, fellow human...'); }
@@ -153,12 +153,12 @@
 		}
 
 		// Board object used to store game states
-		function Board(size, turn, state)
-		{
+		function Board(size, turn, state) {
 			this.size = size;
 			this.turn = turn;
 			this.state = state;
 		}
+
 		Board.prototype.getHash = function() { return this.state.toString(); }
 		Board.prototype.playColumn = function(c)
 		{
@@ -181,6 +181,7 @@
 		};
 
 		Board.prototype.getScore = function(p) {
+			console.log('scoreArr: ',scoreArr);
 			if (scoreArr[''+p+this.getHash()]!=null) {
 				return scoreArr[''+p+this.getHash()];
 			} else {
